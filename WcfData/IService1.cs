@@ -13,7 +13,6 @@ namespace WcfData
     {
         [OperationContract]
         List<Alumno> GetAll();
-
-        
     }
+
 }
