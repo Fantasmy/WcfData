@@ -13,6 +13,10 @@ namespace WcfData
     {
         [OperationContract]
         List<Alumno> GetAll();
+        [OperationContract]
+        List<Alumno> Add();
+        [OperationContract]
+        List<Alumno> Delete();
     }
 
 }
