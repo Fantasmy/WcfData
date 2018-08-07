@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using WcfData.Model;
 
 namespace WcfData
 {
@@ -11,25 +12,73 @@ namespace WcfData
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service1 : IService1
     {
-        static List<Alumno> alumnoList = new List<Alumno>();
+        WcfCRUDEntities db;
 
-        static Service1()
+        public Service1()
         {
-            Alumno alumno = new Alumno();
-            alumno.Nombre = "Pepe";
-            alumno.Apellidos = "Soto";
-
-            alumnoList.Add(alumno);
+            db = new WcfCRUDEntities();
         }
 
-        public void Add(Alumno alumno)
+
+        public bool Delete(Guid id)
         {
-            alumnoList.Add(alumno);
+            try
+            {
+                Students students = db.Students.Where(x => x.id == id).FirstOrDefault();
+
+                db.Students.Remove(students);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public List<Alumno> GetAll()
+        public List<Students> GetAll()
         {
-            return alumnoList;
+            List<Students> studentsList = db.Students.ToList();
+            return studentsList;
+        }
+
+        public Students GetById(Guid id)
+        {
+            Students students = db.Students.Where(x => x.id == id).FirstOrDefault();
+
+            return students;
+        }
+
+        public Students Post(Students students)
+        {
+            db.Students.Add(students);
+            db.SaveChanges();
+
+            Students insertedStudent = db.Students.Where(x => x.id == students.id).FirstOrDefault();
+
+            return insertedStudent;
+        }
+
+        public Students Put(Guid id, Students students)
+        {
+            try
+            {
+                Students foundStudent = db.Students.Where(x => x.id == id).FirstOrDefault();
+
+                foundStudent.id = students.id;
+                foundStudent.name = students.name;
+                foundStudent.surname = students.surname;
+                foundStudent.email = students.email;
+
+                db.SaveChanges();
+
+                return GetById(students.id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

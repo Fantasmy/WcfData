@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using WcfData.Model;
 
 namespace WcfData
 {
@@ -12,15 +13,19 @@ namespace WcfData
     public interface IService1
     {
         [OperationContract]
-        List<Alumno> GetAll();
+        List<Students> GetAll();
+
         [OperationContract]
-        void Add(Alumno alumno);
-        //[OperationContract]
-        //Alumno GetBySurname(string surname);
-        //[OperationContract]
-        //bool Delete(string surname);
-        //[OperationContract]
-        //Alumno Update(Alumno alumno);
+        Students GetById(Guid id);
+
+        [OperationContract]
+        Students Post(Students student);
+
+        [OperationContract]
+        Students Put(Guid guid, Students student);
+
+        [OperationContract]
+        bool Delete(Guid guid);
     }
 
 }
