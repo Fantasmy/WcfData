@@ -14,13 +14,13 @@ namespace WcfData
         [OperationContract]
         List<Alumno> GetAll();
         [OperationContract]
-        Alumno Add(Alumno alumno);
-        [OperationContract]
-        Alumno GetBySurname(string surname);
-        [OperationContract]
-        bool Delete(string surname);
-        [OperationContract]
-        Alumno Update(Alumno alumno);
+        void Add(Alumno alumno);
+        //[OperationContract]
+        //Alumno GetBySurname(string surname);
+        //[OperationContract]
+        //bool Delete(string surname);
+        //[OperationContract]
+        //Alumno Update(Alumno alumno);
     }
 
 }
